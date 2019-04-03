@@ -1,0 +1,45 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="№1 insert data in tables" author="Gavrilov Ivan">
+        <insert tableName="role">
+            <column name="id" valueNumeric="01"/>
+            <column name="rolename" value="ROLE_ADMIN"/>
+        </insert>
+        <insert tableName="role">
+            <column name="id" valueNumeric="02"/>
+            <column name="rolename" value="ROLE_USER"/>
+        </insert>
+
+        <insert tableName="user">
+            <column name="id" valueNumeric="01"/>
+            <column name="login" value="ivan"/>
+            <column name="fio" value="Админ"/>
+            <column name="password" value="123456"/>
+            <column name="enabled" valueNumeric="1"/>
+        </insert>
+        <insert tableName="user">
+            <column name="id" valueNumeric="02"/>
+            <column name="login" value="mar"/>
+            <column name="fio" value="Тестовый Тест Тестович"/>
+            <column name="password" value="123456"/>
+            <column name="enabled" valueNumeric="1"/>
+        </insert>
+
+        <insert tableName="user_role">
+            <column name="user_id" valueNumeric="01"/>
+            <column name="role_id" valueNumeric="01"/>
+        </insert>
+        <insert tableName="user_role">
+            <column name="user_id" valueNumeric="01"/>
+            <column name="role_id" valueNumeric="02"/>
+        </insert>
+        <insert tableName="user_role">
+            <column name="user_id" valueNumeric="02"/>
+            <column name="role_id" valueNumeric="02"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

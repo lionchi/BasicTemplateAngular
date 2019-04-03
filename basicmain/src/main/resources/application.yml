@@ -1,0 +1,25 @@
+spring:
+  jmx:
+    enabled: false
+  cache:
+    ehcache:
+      config: classpath:ehcache.xml
+  datasource:
+    url: @db.url@
+    driverClassName: @db.driver@
+    username: @db.user@
+    password: @db.password@
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    hibernate:
+      ddl-auto: validate
+    properties:
+        hibernate.cache.use_second_level_cache: true
+        hibernate.cache.use_query_cache: true
+        hibernate.cache.region.factory_class: org.hibernate.cache.jcache.JCacheRegionFactory
+        hibernate.javax.cache.provider: org.ehcache.jsr107.EhcacheCachingProvider
+  devtools:
+    restart:
+      enabled: true
+server:
+  port: 8080
