@@ -1,5 +1,8 @@
 package com.gavrilov.core.dto;
 
+import com.gavrilov.core.domain.User;
+import com.gavrilov.core.mappers.MapperFactory;
+import com.gavrilov.core.mappers.UserMapper;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotEmpty;
@@ -21,9 +24,6 @@ public class UserDTO {
 
     @NotNull
     private Integer enabled;
-
-    @NotNull
-    private Long roleId;
 
     public UserDTO() {
     }
@@ -68,11 +68,8 @@ public class UserDTO {
         this.enabled = enabled;
     }
 
-    public Long getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
+    public static UserDTO userAsUserDTO(User user) {
+        UserMapper mapper = MapperFactory.createMapper(UserMapper.class);
+        return mapper.asUserDTO(user);
     }
 }

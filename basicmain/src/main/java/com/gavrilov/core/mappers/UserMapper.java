@@ -6,7 +6,7 @@ import fr.xebia.extras.selma.Field;
 import fr.xebia.extras.selma.IgnoreMissing;
 import fr.xebia.extras.selma.Mapper;
 
-@Mapper(withCustom = UserCustomMapper.class, withCustomFields = {@Field({"role.id", "roleId"})},
+@Mapper(withCustom = UserCustomMapper.class,/* withCustomFields = {@Field({"role.id", "roleId"})},*/
         withIgnoreMissing = IgnoreMissing.ALL)
 public interface UserMapper {
     UserDTO asUserDTO (User user);

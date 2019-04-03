@@ -23,14 +23,10 @@ import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.security.web.session.SessionManagementFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import javax.sql.DataSource;
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private DataSource dataSource;
     @Autowired
     private UserDetailsService userDetailsService;
 
@@ -55,13 +51,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.
+       /* http.
                 authorizeRequests() // позволяет ограничить доступ на основе использования
                 .antMatchers("/").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/registration").permitAll()
-                .antMatchers("/user/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER").anyRequest()
-                .authenticated()
+                .antMatchers("/user/**").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .csrf().disable()
                 .addFilterBefore(new SessionFilter(), SessionManagementFilter.class)
@@ -94,7 +90,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .maximumSessions(2)
                 // Без предупреждения закроет сессию. Можно создавать свои обработчики и передат его в метод failureHandler
                 .maxSessionsPreventsLogin(false)
-                .expiredUrl("/sessionExpired");
+                .expiredUrl("/sessionExpired");*/
     }
 
     @Override

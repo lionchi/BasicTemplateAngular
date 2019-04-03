@@ -10,7 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @Transactional
@@ -29,5 +33,14 @@ public class UserService {
         UserMapper userMapper = MapperFactory.createMapper(UserMapper.class);
         Optional<User> userById = userRepository.findById(id);
         return userMapper.asUserDTO(userById.orElse(null));
+    }
+
+    @Transactional(readOnly = true)
+    public LinkedList<UserDTO> getUserList() {
+        return userRepository.findAll()
+                .stream()
+                .map(UserDTO::userAsUserDTO)
+                .collect(Collectors.toCollection(LinkedList::new));
+
     }
 }
