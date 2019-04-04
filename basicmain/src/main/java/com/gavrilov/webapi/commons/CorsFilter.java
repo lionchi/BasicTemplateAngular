@@ -15,7 +15,7 @@ public class CorsFilter implements Filter {
         response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS"); // Указывает какие методы доступны для доступа к ресурсам
         response.setHeader("Access-Control-Max-Age", String.valueOf(Duration.ofHours(24).toMinutes() * 60)); // Указывает время жизни предзапроса
-        response.setHeader("Access-Control-Allow-Headers", "X-Requested-With,Content-Type,Accept,Authorization,x-timezone,user-agent,User-Connection-Type"); // Указывает какие заголовки доступны
+        response.setHeader("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Authorization, Origin, Accept, Access-Control-Request-Method, Access-Control-Request-Headers"); // Указывает какие заголовки доступны
 
         chain.doFilter(req, res);
     }

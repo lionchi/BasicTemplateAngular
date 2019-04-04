@@ -1,13 +1,15 @@
 package com.gavrilov.webapi.config;
 
 import com.gavrilov.webapi.commons.CorsFilter;
-import com.gavrilov.webapi.commons.MyAuthenticationSuccessHandler;
 import com.gavrilov.webapi.commons.SessionEventListener;
 import com.gavrilov.webapi.commons.SessionFilter;
+import com.gavrilov.webapi.security.JwtAuthenticationEntryPoint;
+import com.gavrilov.webapi.security.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,10 +20,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.security.web.session.SessionManagementFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -30,67 +31,49 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    private JwtAuthenticationEntryPoint unauthorizedHandler;
+
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder());
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
-/*    @Override
-    protected void configure(AuthenticationManagerBuilder auth)
-            throws Exception {
-        auth.jdbcAuthentication()
-                .dataSource(dataSource)
-                .rolePrefix("ROLE_")
-                .usersByUsernameQuery("SELECT login, password, case enabled when 1 then 'true' else 'false' end FROM user WHERE login = ?")
-                .authoritiesByUsernameQuery("SELECT u.login, r.rolename FROM user u join user_role r on u.user_role_id = r.id where u.login = ?")
-                .passwordEncoder(passwordEncoder());
-    }*/
+    @Autowired
+    public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService)
+                .passwordEncoder(encoder());
+    }
 
+    @Bean
+    public JwtAuthenticationFilter authenticationTokenFilterBean() {
+        return new JwtAuthenticationFilter();
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-       /* http.
-                authorizeRequests() // позволяет ограничить доступ на основе использования
-                .antMatchers("/").permitAll()
-                .antMatchers("/login").permitAll()
-                .antMatchers("/registration").permitAll()
-                .antMatchers("/user/**").permitAll()
+        http.csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/token/*").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .csrf().disable()
-                .addFilterBefore(new SessionFilter(), SessionManagementFilter.class)
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
+                .and()
+                .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new CorsFilter(), ChannelProcessingFilter.class)
-                .formLogin()
-                .loginPage("/login").failureUrl("/login?error=true") // при неудачных попытках авторизации
-                .successHandler(successHandler())
-                //.defaultSuccessUrl("/user/home")
-                .usernameParameter("login")
-                .passwordParameter("password")
-                .and()
-                .logout().deleteCookies("JSESSIONID", "REMEMBER")
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/").and().exceptionHandling()
-                .accessDeniedPage("/access-denied")
-                .and()
-                .rememberMe()
-                // Ключ для индетификации маркера
-                .key("uniqueAndSecret")
-                .rememberMeParameter("remember-me")
-                .rememberMeCookieName("REMEMBER")
-                // Сколько будет  действовать маорке
-                .tokenValiditySeconds(86400)
-                .and()
                 .sessionManagement()
                 // при проверке подлинности создается новый сеанс, в который копируется текущей, старый закрывается. По умолчанию включена
                 .sessionFixation().migrateSession()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                .invalidSessionUrl("/invalidSession")
                 .maximumSessions(2)
                 // Без предупреждения закроет сессию. Можно создавать свои обработчики и передат его в метод failureHandler
-                .maxSessionsPreventsLogin(false)
-                .expiredUrl("/sessionExpired");*/
+                .maxSessionsPreventsLogin(false);
+    }
+
+    @Bean
+    public BCryptPasswordEncoder encoder() {
+        return new BCryptPasswordEncoder();
     }
 
     @Override
@@ -102,15 +85,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public HttpSessionEventPublisher httpSessionEventPublisher() {
         return new SessionEventListener();
-    }
-
-    private AuthenticationSuccessHandler successHandler() {
-        return new MyAuthenticationSuccessHandler();
-    }
-
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 
     @Bean

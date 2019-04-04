@@ -5,8 +5,12 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {LoginComponent} from './login/login.component';
 import {UserComponent} from './user/user.component';
-import {UserService} from "./user.service";
-import {HttpClientModule} from "@angular/common/http";
+import {UserService} from './user.service';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {AuthService} from './auth.service';
+import {Interceptor} from './app.interceptor';
+import {FormsModule} from '@angular/forms';
+import {TokenStorage} from './_common/token.storage';
 
 @NgModule({
   declarations: [
@@ -17,9 +21,12 @@ import {HttpClientModule} from "@angular/common/http";
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
-  providers: [UserService],
+  providers: [UserService,
+    AuthService, TokenStorage,
+    {provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule {

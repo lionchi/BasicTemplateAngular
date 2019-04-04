@@ -1,4 +1,4 @@
-package com.gavrilov.webapi.commons;
+package com.gavrilov.webapi.security;
 
 import com.gavrilov.core.domain.User;
 import com.gavrilov.core.repository.UserRepository;

@@ -43,4 +43,9 @@ public class UserService {
                 .collect(Collectors.toCollection(LinkedList::new));
 
     }
+
+    @Transactional(readOnly = true)
+    public User findOne(String login) {
+        return userRepository.findByLogin(login).orElse(null);
+    }
 }
