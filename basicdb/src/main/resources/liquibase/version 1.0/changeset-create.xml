@@ -15,7 +15,7 @@
             <column name="fio" type="varchar(100)">
                 <constraints nullable="false"/>
             </column>
-            <column name="password" type="varchar(100)">
+            <column name="password" type="text">
                 <constraints nullable="false"/>
             </column>
             <column name="enabled" type="int"/>

@@ -18,14 +18,14 @@
             <column name="id" valueNumeric="01"/>
             <column name="login" value="ivan"/>
             <column name="fio" value="Админ"/>
-            <column name="password" value="123456"/>
+            <column name="password" value="$2a$10$JYElA3tqiikLuzlJEUeMcOVcZAhT0Aoz/DvEx4YzpHyEXjTBKCPiC"/>
             <column name="enabled" valueNumeric="1"/>
         </insert>
         <insert tableName="user">
             <column name="id" valueNumeric="02"/>
             <column name="login" value="mar"/>
             <column name="fio" value="Тестовый Тест Тестович"/>
-            <column name="password" value="123456"/>
+            <column name="password" value="$2a$10$JYElA3tqiikLuzlJEUeMcOVcZAhT0Aoz/DvEx4YzpHyEXjTBKCPiC"/>
             <column name="enabled" valueNumeric="1"/>
         </insert>
 
