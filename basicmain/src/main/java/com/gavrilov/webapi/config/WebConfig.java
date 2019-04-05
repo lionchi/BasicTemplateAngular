@@ -15,7 +15,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowCredentials(true)
                 .allowedHeaders("X-Requested-With", "Content-Type", "Authorization", "Origin", "Accept",
                         "Access-Control-Request-Method", "Access-Control-Request-Headers")
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedMethods("HEAD", "OPTIONS", "GET", "POST", "PUT", "PATCH", "DELETE")
                 .allowedOrigins("*")
                 .maxAge(3600);
     }

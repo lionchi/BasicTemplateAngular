@@ -15,7 +15,7 @@ public class User extends BasicEntity {
     @Column(name = "login", nullable = false)
     private String login;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password", nullable = false, columnDefinition = "text")
     private String password;
 
     @Column(name = "fio", nullable = false)
