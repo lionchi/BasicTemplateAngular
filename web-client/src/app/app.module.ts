@@ -8,9 +8,10 @@ import {UserComponent} from './user/user.component';
 import {UserService} from './user.service';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AuthService} from './auth.service';
-import {Interceptor} from './app.interceptor';
+import {Interceptor} from './_common/app.interceptor';
 import {FormsModule} from '@angular/forms';
 import {TokenStorage} from './_common/token.storage';
+import {RefreshTokenInterceptor} from "./_common/refresh.token.inspector";
 
 @NgModule({
   declarations: [
@@ -24,9 +25,9 @@ import {TokenStorage} from './_common/token.storage';
     HttpClientModule,
     FormsModule
   ],
-  providers: [UserService,
-    AuthService, TokenStorage,
-    {provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true}],
+  providers: [UserService, AuthService, TokenStorage,
+    {provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: RefreshTokenInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule {

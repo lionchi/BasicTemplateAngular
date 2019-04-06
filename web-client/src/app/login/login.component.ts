@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService} from '../auth.service';
 import {TokenStorage} from '../_common/token.storage';
@@ -14,6 +14,9 @@ export class LoginComponent implements OnInit {
   password: string;
 
   constructor(private router: Router, private authService: AuthService, private token: TokenStorage) {
+    if (this.token.getToken() != null) {
+      this.router.navigate(['user']);
+    }
   }
 
   ngOnInit() {

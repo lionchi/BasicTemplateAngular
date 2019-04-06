@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
-import {TokenStorage} from './_common/token.storage';
+import {TokenStorage} from './token.storage';
 
 @Injectable()
 export class Interceptor implements HttpInterceptor {

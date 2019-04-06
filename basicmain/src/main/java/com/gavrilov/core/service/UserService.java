@@ -7,6 +7,7 @@ import com.gavrilov.core.mappers.UserMapper;
 import com.gavrilov.core.repository.RoleRepository;
 import com.gavrilov.core.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,6 +37,7 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public LinkedList<UserDTO> getUserList() {
         return userRepository.findAll()
                 .stream()

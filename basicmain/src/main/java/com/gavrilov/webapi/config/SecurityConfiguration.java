@@ -56,7 +56,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
                 .and()
                 .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class)
-                //.addFilterBefore(new CorsFilter(), ChannelProcessingFilter.class) Поддержка CORS на основе фильтра
                 .sessionManagement()
                 // при проверке подлинности создается новый сеанс, в который копируется текущей, старый закрывается. По умолчанию включена
                 .sessionFixation().migrateSession()
