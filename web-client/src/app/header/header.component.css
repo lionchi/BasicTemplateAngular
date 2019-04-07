@@ -1,0 +1,17 @@
+.navbar-brand {
+  width: 10%;
+  border-right: 2px solid #fff;
+}
+
+.navbar-right {
+  float: right !important;
+  margin-right: -15px;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+/*a:hover {
+  text-decoration: underline;
+}*/

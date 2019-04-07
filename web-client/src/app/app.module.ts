@@ -9,21 +9,26 @@ import {UserService} from './user.service';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AuthService} from './auth.service';
 import {Interceptor} from './_common/app.interceptor';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TokenStorage} from './_common/token.storage';
 import {RefreshTokenInterceptor} from "./_common/refresh.token.inspector";
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    UserComponent
+    UserComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [UserService, AuthService, TokenStorage,
     {provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true},

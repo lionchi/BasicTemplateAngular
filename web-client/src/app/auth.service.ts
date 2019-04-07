@@ -22,4 +22,8 @@ export class AuthService {
     this.tokenStorage.remove();
     this.router.navigate(['login']);
   }
+
+  isAuth(): boolean {
+    return this.tokenStorage.getToken() != null;
+  }
 }

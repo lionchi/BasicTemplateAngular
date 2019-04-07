@@ -1,0 +1,29 @@
+footer.page-footer {
+  bottom: 0;
+  color: #fff;
+}
+
+.font-small {
+  font-size: .9rem;
+}
+
+.blue {
+  background-color: #2196f3 !important;
+}
+
+footer.page-footer .footer-copyright {
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, .2);
+  color: rgba(255, 255, 255, .6);
+}
+
+footer.page-footer a {
+  color: #fff;
+}
+
+footer {
+  width: 100%;
+  position: absolute;
+  top: 85%;
+}
+
