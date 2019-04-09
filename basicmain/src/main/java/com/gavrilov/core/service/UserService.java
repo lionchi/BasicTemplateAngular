@@ -1,5 +1,6 @@
 package com.gavrilov.core.service;
 
+import com.gavrilov.core.domain.Role;
 import com.gavrilov.core.domain.User;
 import com.gavrilov.core.dto.UserDTO;
 import com.gavrilov.core.mappers.MapperFactory;
@@ -8,25 +9,29 @@ import com.gavrilov.core.repository.RoleRepository;
 import com.gavrilov.core.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import javax.persistence.EntityManager;
+import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 @Transactional
 public class UserService {
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
+    private final EntityManager entityManager;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserService(RoleRepository roleRepository, UserRepository userRepository) {
+    public UserService(RoleRepository roleRepository, UserRepository userRepository, EntityManager entityManager,
+                       BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
+        this.entityManager = entityManager;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Transactional(readOnly = true)
@@ -49,5 +54,13 @@ public class UserService {
     @Transactional(readOnly = true)
     public User findOne(String login) {
         return userRepository.findByLogin(login).orElse(null);
+    }
+
+    public void saveUser(UserDTO userDTO) {
+        User user = UserDTO.UserDTOAsUser(userDTO);
+        Role role = roleRepository.findByRolename("ROLE_USER");
+        user.setRoles(Collections.singletonList(role));
+        user.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
+        entityManager.persist(user);
     }
 }

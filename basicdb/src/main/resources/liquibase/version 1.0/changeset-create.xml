@@ -15,6 +15,9 @@
             <column name="fio" type="varchar(100)">
                 <constraints nullable="false"/>
             </column>
+            <column name="email" type="varchar(70)">
+                <constraints nullable="false"/>
+            </column>
             <column name="password" type="text">
                 <constraints nullable="false"/>
             </column>

@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {environment} from '../environments/environment';
 import {TokenStorage} from "./_common/token.storage";
 import {Router} from "@angular/router";
+import {UserModel} from "./user/user.model";
 
 @Injectable()
 export class AuthService {
@@ -15,7 +16,7 @@ export class AuthService {
 
   attemptAuth(login: string, password: string): Observable<any> {
     const credentials = {login: login, password: password};
-    return this.http.post(this.apiUrl + 'token/generate-token', credentials);
+    return this.http.post(this.apiUrl + 'management/generate-token', credentials);
   }
 
   logout() {
@@ -25,5 +26,9 @@ export class AuthService {
 
   isAuth(): boolean {
     return this.tokenStorage.getToken() != null;
+  }
+
+  registration(regUser: UserModel): Observable<any> {
+    return this.http.post(this.apiUrl + "management/registration", regUser)
   }
 }

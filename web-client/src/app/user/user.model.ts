@@ -3,5 +3,6 @@ export class UserModel {
   login?: string;
   password?: string;
   fio?: string;
+  email?:string;
   enabled?: number;
 }

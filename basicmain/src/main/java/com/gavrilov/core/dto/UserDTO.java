@@ -9,18 +9,21 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class UserDTO {
-    @NotNull
+
     private Long id;
 
-    @NotEmpty(message = "Это поле недолжно быть пустым")
+    @NotEmpty(message = "Поле login недолжно быть пустым")
     private String login;
 
-    @NotEmpty(message = "Это поле недолжно быть пустым")
-    @Length(min = 6, message = "Длина пароля должна быть от 6 символов")
+    @NotEmpty(message = "Поле password недолжно быть пустым")
+    @Length(min = 7, message = "Длина пароля должна быть от 7 символов")
     private String password;
 
-    @NotEmpty(message = "Это поле недолжно быть пустым")
+    @NotEmpty(message = "Поле fio недолжно быть пустым")
     private String fio;
+
+    @NotEmpty(message = "Поле email недолжно быть пустым")
+    private String email;
 
     @NotNull
     private Integer enabled;
@@ -60,6 +63,14 @@ public class UserDTO {
         this.fio = fio;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public Integer getEnabled() {
         return enabled;
     }
@@ -71,5 +82,10 @@ public class UserDTO {
     public static UserDTO userAsUserDTO(User user) {
         UserMapper mapper = MapperFactory.createMapper(UserMapper.class);
         return mapper.asUserDTO(user);
+    }
+
+    public static User UserDTOAsUser(UserDTO userDTO) {
+        UserMapper mapper = MapperFactory.createMapper(UserMapper.class);
+        return mapper.asUser(userDTO);
     }
 }

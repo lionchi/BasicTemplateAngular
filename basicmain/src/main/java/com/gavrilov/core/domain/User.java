@@ -21,6 +21,9 @@ public class User extends BasicEntity {
     @Column(name = "fio", nullable = false)
     private String fio;
 
+    @Column(name = "email", nullable = false)
+    private String email;
+
     @Column(name = "enabled")
     private Integer enabled;
 
@@ -59,6 +62,15 @@ public class User extends BasicEntity {
 
     public void setFio(String fio) {
         this.fio = fio;
+    }
+
+    @Nonnull
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Nonnull

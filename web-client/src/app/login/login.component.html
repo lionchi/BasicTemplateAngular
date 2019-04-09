@@ -35,7 +35,7 @@
       <button class="btn btn-primary btn-block" (click)="invokeLogin()">Войти</button>
     </div>
     <div class="clearfix">
-      <a class="pull-left" href="#">Создать акаунт</a>
+      <a class="pull-left" routerLink="/registration" target="_blank">Создать акаунт</a>
       <a class="pull-right" style="cursor: pointer; color: #007bff" (click)="openModalDialog()">Забыли пароль?</a>
     </div>
   </form>
@@ -65,7 +65,7 @@
             </div>
           </div>
           <div class="form-group">
-            <button class="btn btn-primary btn-block" (click)="mdfLogin(passwordRecovery.value)">Восстановить</button>
+            <button class="btn btn-primary btn-block" [disabled]="angForm.invalid" (click)="mdfLogin(passwordRecovery.value)">Восстановить</button>
           </div>
         </form>
       </div>

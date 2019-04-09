@@ -14,6 +14,7 @@ import {TokenStorage} from './_common/token.storage';
 import {RefreshTokenInterceptor} from "./_common/refresh.token.inspector";
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
+import { RegistrationComponent } from './registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { FooterComponent } from './footer/footer.component';
     LoginComponent,
     UserComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,

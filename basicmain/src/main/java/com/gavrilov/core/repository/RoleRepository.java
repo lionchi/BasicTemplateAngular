@@ -15,4 +15,6 @@ public interface RoleRepository extends JpaRepository<Role, Long>, JpaSpecificat
     @Override
     @Cacheable
     Optional<Role> findById(Long aLong);
+
+    Role  findByRolename (String name);
 }
