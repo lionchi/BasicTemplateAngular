@@ -3,6 +3,7 @@ package com.gavrilov.core.service;
 import com.gavrilov.core.domain.Role;
 import com.gavrilov.core.domain.User;
 import com.gavrilov.core.dto.UserDTO;
+import com.gavrilov.core.exception.ModelValidationException;
 import com.gavrilov.core.mappers.MapperFactory;
 import com.gavrilov.core.mappers.UserMapper;
 import com.gavrilov.core.repository.RoleRepository;
@@ -61,6 +62,16 @@ public class UserService {
         Role role = roleRepository.findByRolename("ROLE_USER");
         user.setRoles(Collections.singletonList(role));
         user.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
+        user.setEnabled(1);
         entityManager.persist(user);
+    }
+
+    @Transactional(readOnly = true)
+    public void validationNewUser(UserDTO userDTO) {
+        Optional<User> byLogin = userRepository.findByLogin(userDTO.getLogin());
+        Optional<User> byEmail = userRepository.findByEmail(userDTO.getEmail());
+        if (byLogin.isPresent() || byEmail.isPresent()) {
+            throw new ModelValidationException("error.user.validation","Пользователь с таким логином или email уже существует");
+        }
     }
 }

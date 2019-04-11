@@ -51,11 +51,12 @@ export class LoginComponent implements OnInit {
   }
 
   openModalDialog() {
-    this.display = 'block'; //Set block css
+    this.display = 'block';
   }
 
   closeModalDialog() {
-    this.display = 'none'; //set none css after close dialog
+    this.display = 'none';
+    this.passwordRecovery.reset();
   }
 
 }

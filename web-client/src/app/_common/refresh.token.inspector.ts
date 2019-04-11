@@ -17,10 +17,11 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
       if (err.status === 401) {
         this.auth.logout();
         this.router.navigate(['login']);
+        const error = err.error.message || err.statusText;
+        return throwError(error);
+      } else {
+        return throwError(err.error);
       }
-
-      const error = err.error.message || err.statusText;
-      return throwError(error);
     }))
   }
 }

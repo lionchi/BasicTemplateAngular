@@ -1,11 +1,11 @@
+<!-- Форма авторизации -->
 <div class="login-form">
   <h2 class="text-center">Авторизация</h2>
   <form [formGroup]="angForm">
     <div class="form-group">
       <div class="input-group">
         <span class="input-group-addon"><i class="fa fa-user"></i></span>
-        <!--<label for="login">Логин: </label>-->
-        <input type="text" id="login" name="login" class="form-control" placeholder="Логин" formControlName="login"
+        <input type="text" id="login" name="login" class="form-control" placeholder="Логин" autocomplete="off" formControlName="login"
                [(ngModel)]="login" required/>
       </div>
     </div>
@@ -19,8 +19,7 @@
     <div class="form-group">
       <div class="input-group">
         <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-        <!--<label for="password">Пароль: </label>-->
-        <input type="password" class="form-control" id="password" name="password" placeholder="Пароль"
+        <input type="password" class="form-control" id="password" name="password" placeholder="Пароль" autocomplete="off"
                formControlName="password" [(ngModel)]="password" required/>
       </div>
     </div>
@@ -40,9 +39,8 @@
     </div>
   </form>
 </div>
-
-<!-- modal -->
-<div class="modal text-center" tabindex="-7" role="dialog" [ngStyle]="{'display':display}">
+<!-- Модальное окно восстановления пароля -->
+<div class="modal" tabindex="-7" role="dialog" [ngStyle]="{'display':display}">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -54,18 +52,21 @@
         <form [formGroup]="passwordRecovery">
           <div class="form-group">
             <div class="input-group">
-              <input type="text" id="email" name="email" class="form-control" placeholder="Email"
+              <input type="text" id="email" name="email" class="form-control" placeholder="Email" autocomplete="off"
                      formControlName="email" required/>
             </div>
           </div>
-          <div *ngIf="passwordRecovery.controls['email'].invalid && (passwordRecovery.controls['email'].dirty || passwordRecovery.controls['email'].touched)"
+          <div
+            *ngIf="passwordRecovery.controls['email'].invalid && (passwordRecovery.controls['email'].dirty || passwordRecovery.controls['email'].touched)"
             class="alert alert-danger">
             <div *ngIf="passwordRecovery.controls['email'].errors">
               Неверный формат email
             </div>
           </div>
           <div class="form-group">
-            <button class="btn btn-primary btn-block" [disabled]="angForm.invalid" (click)="mdfLogin(passwordRecovery.value)">Восстановить</button>
+            <button class="btn btn-primary btn-block" [disabled]="angForm.invalid"
+                    (click)="mdfLogin(passwordRecovery.value)">Восстановить
+            </button>
           </div>
         </form>
       </div>

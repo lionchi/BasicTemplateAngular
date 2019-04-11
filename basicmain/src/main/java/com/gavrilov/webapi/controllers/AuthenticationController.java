@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.naming.AuthenticationException;
 import javax.validation.Valid;
 
 @RestController
@@ -48,7 +47,8 @@ public class AuthenticationController {
     }
 
     @PostMapping(value = "/registration")
-    public ResponseEntity registerUser(@RequestBody @Valid  UserDTO userDTO) {
+    public ResponseEntity registerUser(@RequestBody @Valid UserDTO userDTO) {
+        userService.validationNewUser(userDTO);
         userService.saveUser(userDTO);
         return ResponseEntity.ok().build();
     }

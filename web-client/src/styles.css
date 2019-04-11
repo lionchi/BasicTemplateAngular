@@ -1,1 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+.popup-main {
+  width: 25%;
+  float: right;
+}
+
+.modal {
+  position: absolute;
+  transform: translate(0%, 20%);
+}

@@ -20,6 +20,9 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
     @Cacheable
     Optional<User> findByLogin (String login);
 
+    @Cacheable
+    Optional<User> findByEmail (String email);
+
     @Override
     List<User> findAll();
 }

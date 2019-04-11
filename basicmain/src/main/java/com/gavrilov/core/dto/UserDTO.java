@@ -25,7 +25,6 @@ public class UserDTO {
     @NotEmpty(message = "Поле email недолжно быть пустым")
     private String email;
 
-    @NotNull
     private Integer enabled;
 
     public UserDTO() {

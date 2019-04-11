@@ -11,8 +11,8 @@ export class AppComponent {
   title = 'web-client';
 
   constructor (private router: Router, private auth: AuthService) {
-    if (!this.auth.isAuth()) {
+/*    if (!this.auth.isAuth()) {
       this.router.navigate(['login']);
-    }
+    }*/
   }
 }
