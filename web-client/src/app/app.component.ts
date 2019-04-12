@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService} from "./auth.service";
 
@@ -10,9 +10,6 @@ import {AuthService} from "./auth.service";
 export class AppComponent {
   title = 'web-client';
 
-  constructor (private router: Router, private auth: AuthService) {
-/*    if (!this.auth.isAuth()) {
-      this.router.navigate(['login']);
-    }*/
+  constructor(private router: Router, private auth: AuthService) {
   }
 }

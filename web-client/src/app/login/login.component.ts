@@ -3,21 +3,24 @@ import {Router} from "@angular/router";
 import {AuthService} from '../auth.service';
 import {TokenStorage} from '../_common/token.storage';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {BaseComponentWithPopup} from "../base.component.with.popup";
+import {ErrorMessageRu} from "../_common/error.message.ru";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent extends BaseComponentWithPopup implements OnInit {
 
   login: string;
   password: string;
   angForm: FormGroup;
   passwordRecovery: FormGroup;
-  display = 'none';
+  displayModalPasswordRecovery = 'none';
 
   constructor(private router: Router, private authService: AuthService, private token: TokenStorage, private fb: FormBuilder) {
+    super();
     if (this.token.getToken() != null) {
       this.router.navigate(['user']);
     }
@@ -41,6 +44,12 @@ export class LoginComponent implements OnInit {
       data => {
         this.token.saveToken(data.token);
         this.router.navigate(['user']);
+      }, error => {
+        if (error.error === 'error.authentication.user') {
+          this.message = ErrorMessageRu.errorAuthenticationUser;
+          this.initPopup(true, 'error', 'block');
+          setTimeout(() => this.closePopup(), 2500);
+        }
       }
     );
   }
@@ -51,11 +60,11 @@ export class LoginComponent implements OnInit {
   }
 
   openModalDialog() {
-    this.display = 'block';
+    this.displayModalPasswordRecovery = 'block';
   }
 
   closeModalDialog() {
-    this.display = 'none';
+    this.displayModalPasswordRecovery = 'none';
     this.passwordRecovery.reset();
   }
 

@@ -1,3 +1,24 @@
+<!-- Всплывающие уведомление -->
+<div class="popup-main" *ngIf="showPopup" [ngStyle]="{'display':display}">
+  <div class="alert alert-danger" *ngIf="isError">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="closePopup()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    {{message}}
+  </div>
+  <div class="alert alert-success" *ngIf="isSuccess">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="closePopup()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    {{message}}
+  </div>
+  <div class="alert alert-success" *ngIf="isInfo">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="closePopup()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    {{message}}
+  </div>
+</div>
 <!-- Форма авторизации -->
 <div class="login-form">
   <h2 class="text-center">Авторизация</h2>
@@ -40,40 +61,43 @@
   </form>
 </div>
 <!-- Модальное окно восстановления пароля -->
-<div class="modal" tabindex="-7" role="dialog" [ngStyle]="{'display':display}">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Востановление пароля</h4>
-        <button type="button" class="close" aria-label="Close" (click)="closeModalDialog()"><span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="passwordRecovery">
-          <div class="form-group">
-            <div class="input-group">
-              <input type="text" id="email" name="email" class="form-control" placeholder="Email" autocomplete="off"
-                     formControlName="email" required/>
+<div class="backdrop" [ngStyle]="{'display':displayModalPasswordRecovery}">
+  <div class="modal" tabindex="-7" role="dialog" [ngStyle]="{'display':displayModalPasswordRecovery}">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Востановление пароля</h4>
+          <button type="button" class="close" aria-label="Close" (click)="closeModalDialog()"><span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="passwordRecovery">
+            <div class="form-group">
+              <div class="input-group">
+                <input type="text" id="email" name="email" class="form-control" placeholder="Email" autocomplete="off"
+                       formControlName="email" required/>
+              </div>
             </div>
-          </div>
-          <div
-            *ngIf="passwordRecovery.controls['email'].invalid && (passwordRecovery.controls['email'].dirty || passwordRecovery.controls['email'].touched)"
-            class="alert alert-danger">
-            <div *ngIf="passwordRecovery.controls['email'].errors">
-              Неверный формат email
+            <div
+              *ngIf="passwordRecovery.controls['email'].invalid && (passwordRecovery.controls['email'].dirty || passwordRecovery.controls['email'].touched)"
+              class="alert alert-danger">
+              <div *ngIf="passwordRecovery.controls['email'].errors">
+                Неверный формат email
+              </div>
             </div>
-          </div>
-          <div class="form-group">
-            <button class="btn btn-primary btn-block" [disabled]="angForm.invalid"
-                    (click)="mdfLogin(passwordRecovery.value)">Восстановить
-            </button>
-          </div>
-        </form>
+            <div class="form-group">
+              <button class="btn btn-primary btn-block" [disabled]="angForm.invalid"
+                      (click)="mdfLogin(passwordRecovery.value)">Восстановить
+              </button>
+            </div>
+          </form>
+        </div>
+        <!-- modal-footer -->
+        <!--      <div class="modal-footer">
+                <button type="button" class="btn btn-default" (click)="closeModalDialog()" >Close</button>
+              </div>-->
       </div>
-      <!-- modal-footer -->
-      <!--      <div class="modal-footer">
-              <button type="button" class="btn btn-default" (click)="closeModalDialog()" >Close</button>
-            </div>-->
     </div>
   </div>
 </div>
+

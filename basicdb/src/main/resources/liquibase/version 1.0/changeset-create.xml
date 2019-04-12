@@ -35,14 +35,16 @@
 
 
         <createTable tableName="user_role">
-            <column name="user_id" type="bigint">
-                <constraints nullable="false" foreignKeyName="fk_user_role_on_user_id"
-                             referencedTableName="user" referencedColumnNames="id"/>
-            </column>
-            <column name="role_id" type="bigint">
-                <constraints nullable="false" foreignKeyName="fk_user_role_on_role_id"
-                             referencedTableName="role" referencedColumnNames="id"/>
-            </column>
+            <column name="user_id" type="bigint"/>
+            <column name="role_id" type="bigint"/>
         </createTable>
+
+        <addForeignKeyConstraint baseTableName="user_role" baseColumnNames="user_id"
+                                 constraintName="fk_user_role_on_user_id" referencedTableName="user"
+                                 referencedColumnNames="id" onDelete="SET NULL"/>
+        <addForeignKeyConstraint baseTableName="user_role" baseColumnNames="role_id"
+                                 constraintName="fk_user_role_on_role_id" referencedTableName="role"
+                                 referencedColumnNames="id" onDelete="SET NULL"/>
+
     </changeSet>
 </databaseChangeLog>

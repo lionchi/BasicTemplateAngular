@@ -1,6 +1,6 @@
 package com.gavrilov.webapi.config;
 
-import com.gavrilov.webapi.commons.SessionEventListener;
+import com.gavrilov.webapi.common.SessionEventListener;
 import com.gavrilov.webapi.security.JwtAuthenticationEntryPoint;
 import com.gavrilov.webapi.security.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.gavrilov.webapi.commons;
+package com.gavrilov.webapi.common;
 
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 

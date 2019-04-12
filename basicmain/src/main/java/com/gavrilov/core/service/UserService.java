@@ -10,7 +10,9 @@ import com.gavrilov.core.repository.RoleRepository;
 import com.gavrilov.core.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -71,7 +73,7 @@ public class UserService {
         Optional<User> byLogin = userRepository.findByLogin(userDTO.getLogin());
         Optional<User> byEmail = userRepository.findByEmail(userDTO.getEmail());
         if (byLogin.isPresent() || byEmail.isPresent()) {
-            throw new ModelValidationException("error.user.validation","Пользователь с таким логином или email уже существует");
+            throw new ModelValidationException("error.user.validation", "Пользователь с таким логином или email уже существует");
         }
     }
 }
