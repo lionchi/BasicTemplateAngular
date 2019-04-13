@@ -20,9 +20,9 @@ export class RegistrationComponent extends BaseComponentWithPopup implements OnI
     super();
     this.registrationForm = this.fb.group({
       login: ['', Validators.required],
-      password: ['', Validators.compose([Validators.required])],
+      password: ['', Validators.compose([Validators.required, Validators.minLength(7)])],
       fio: ['', Validators.required],
-      email: ['', Validators.compose([Validators.required, Validators.pattern("[^ @]*@[^ @]*")])]
+      email: ['', Validators.compose([Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")])]
     });
   }
 

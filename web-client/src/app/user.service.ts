@@ -16,6 +16,10 @@ export class UserService {
   }
 
   public getUsers(): Observable<any> {
-    return this.http.get(this.apiUrl+'user/list');
+    return this.http.get(this.apiUrl + 'user/list');
+  }
+
+  public validationEmail(email: string): Observable<any> {
+    return this.http.put(this.apiUrl + 'management/passwordRecovery', email);
   }
 }

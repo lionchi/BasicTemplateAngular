@@ -8,16 +8,18 @@ import com.gavrilov.core.mappers.MapperFactory;
 import com.gavrilov.core.mappers.UserMapper;
 import com.gavrilov.core.repository.RoleRepository;
 import com.gavrilov.core.repository.UserRepository;
+import org.apache.commons.text.CharacterPredicates;
+import org.apache.commons.text.RandomStringGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.util.*;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -65,7 +67,7 @@ public class UserService {
         user.setRoles(Collections.singletonList(role));
         user.setPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
         user.setEnabled(1);
-        entityManager.persist(user);
+        userRepository.save(user);
     }
 
     @Transactional(readOnly = true)
@@ -75,5 +77,25 @@ public class UserService {
         if (byLogin.isPresent() || byEmail.isPresent()) {
             throw new ModelValidationException("error.user.validation", "Пользователь с таким логином или email уже существует");
         }
+    }
+
+    public String validationEmail(String email) {
+        Optional<User> byEmail = userRepository.findByEmail(email);
+        if (!byEmail.isPresent()) {
+            throw new ModelValidationException("error.user.validation.email", "Такого email в системе не найдено");
+        }
+        User user = byEmail.get();
+        String newPassword = generationNewPassword();
+        String encodeNewPassword = bCryptPasswordEncoder.encode(generationNewPassword());
+        userRepository.updatePassword(encodeNewPassword, user.getId());
+        return newPassword;
+    }
+
+    private String generationNewPassword() {
+        RandomStringGenerator randomStringGenerator = new RandomStringGenerator.Builder()
+                .withinRange('0', 'z')
+                .filteredBy(CharacterPredicates.LETTERS, CharacterPredicates.DIGITS)
+                .build();
+        return randomStringGenerator.generate(10);
     }
 }

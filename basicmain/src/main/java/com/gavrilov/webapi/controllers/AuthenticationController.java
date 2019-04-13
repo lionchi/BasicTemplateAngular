@@ -2,6 +2,7 @@ package com.gavrilov.webapi.controllers;
 
 import com.gavrilov.core.domain.User;
 import com.gavrilov.core.dto.UserDTO;
+import com.gavrilov.core.service.MailService;
 import com.gavrilov.core.service.UserService;
 import com.gavrilov.webapi.security.AuthToken;
 import com.gavrilov.webapi.security.JwtTokenUtil;
@@ -12,10 +13,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -30,6 +28,9 @@ public class AuthenticationController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private MailService mailService;
 
     @PostMapping(value = "/generate-token")
     public ResponseEntity generateToken(@RequestBody LoginUser loginUser) {
@@ -50,6 +51,13 @@ public class AuthenticationController {
     public ResponseEntity registerUser(@RequestBody @Valid UserDTO userDTO) {
         userService.validationNewUser(userDTO);
         userService.saveUser(userDTO);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping(value = "/passwordRecovery")
+    public ResponseEntity passwordRecovery(@RequestBody String email) {
+        String password = userService.validationEmail(email);
+        mailService.sendNewPassword(email, password);
         return ResponseEntity.ok().build();
     }
 }
