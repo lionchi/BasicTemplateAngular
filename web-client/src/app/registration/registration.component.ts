@@ -15,6 +15,8 @@ import {SuccessMessageRu} from "../_common/success.message.ru";
 export class RegistrationComponent extends BaseComponentWithPopup implements OnInit {
 
   registrationForm: FormGroup;
+  isSubmittedRegistrationForm: boolean = false;
+  isLoading: boolean = false;
 
   constructor(private auth: AuthService, private router: Router, private fb: FormBuilder) {
     super();
@@ -30,20 +32,31 @@ export class RegistrationComponent extends BaseComponentWithPopup implements OnI
   }
 
   registration(registrationUser: UserModel): void {
-    this.auth.registration(registrationUser).subscribe(value => {
-      this.registrationForm.reset();
-      this.message = SuccessMessageRu.successCreateNewUser;
-      this.initPopup(true, 'success', 'block');
-      setTimeout(() => {
-        this.closePopup();
-        window.close();
-      }, 2500);
-    }, error => {
-      if (error.error === 'error.user.validation') {
-        this.message = ErrorMessageRu.errorCreateValidationUser;
-        this.initPopup(true, 'error', 'block');
-        setTimeout(() => this.closePopup(), 2500);
-      }
-    });
+    this.isLoading = true;
+    if (this.registrationForm.invalid) {
+      this.isSubmittedRegistrationForm = true;
+      this.isLoading = false;
+    } else {
+      this.isSubmittedRegistrationForm = false;
+      this.auth.registration(registrationUser).subscribe(value => {
+        this.registrationForm.reset();
+        this.message = SuccessMessageRu.successCreateNewUser;
+        this.initPopup(true, 'success', 'block');
+        setTimeout(() => {
+          this.closePopup();
+          window.close();
+        }, 2500);
+      }, error => {
+        this.registrationForm.reset();
+        if (error.error === 'error.user.validation') {
+          this.message = ErrorMessageRu.errorCreateValidationUser;
+          this.initPopup(true, 'error', 'block');
+          setTimeout(() => this.closePopup(), 2500);
+        }
+        this.isLoading = false;
+      }, () => {
+        this.isLoading = false;
+      });
+    }
   }
 }

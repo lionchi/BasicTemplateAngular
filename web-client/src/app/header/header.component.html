@@ -1,7 +1,8 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <a class="navbar-brand" href="#" *ngIf="isAuth()">Мое приложение</a>
-  <a class="navbar-brand" style="color: white"  *ngIf="!isAuth()">Мое приложение</a>
-  <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+  <a class="navbar-brand" style="color: white" *ngIf="!isAuth()">Мое приложение</a>
+  <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarColor02"
+          aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="navbar-collapse collapse" id="navbarColor02" *ngIf="isAuth()">
@@ -19,7 +20,8 @@
         <a class="nav-link" style="color: white" href="#">Категория №4</a>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" style="color: white" data-toggle="dropdown" id="Preview" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link dropdown-toggle" style="color: white" data-toggle="dropdown" id="Preview" href="#"
+           role="button" aria-haspopup="true" aria-expanded="false">
           Выпадающие меню
         </a>
         <div class="dropdown-menu" aria-labelledby="Preview">
@@ -31,12 +33,15 @@
     </ul>
     <ul class="navbar-nav navbar-right">
       <li class="nav-item">
-        <a class="nav-link pointer" style="color: white" (click)="logout()">Выход</a>
+        <a class="nav-link pointer" style="color: white" href="#"> <i class="fa fa-id-card"></i> Личный кабинет</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link pointer" style="color: white" (click)="logout()"> <i class="fa fa-user"></i> Выход</a>
       </li>
     </ul>
-<!--    <form class="form-inline">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
-    </form>-->
+    <!--    <form class="form-inline">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+        </form>-->
   </div>
 </nav>

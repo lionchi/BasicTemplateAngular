@@ -12,9 +12,11 @@ import {Interceptor} from './_common/app.interceptor';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TokenStorage} from './_common/token.storage';
 import {RefreshTokenInterceptor} from "./_common/refresh.token.inspector";
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
-import { RegistrationComponent } from './registration/registration.component';
+import {HeaderComponent} from './header/header.component';
+import {FooterComponent} from './footer/footer.component';
+import {RegistrationComponent} from './registration/registration.component';
+import {MatProgressSpinnerModule} from "@angular/material";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { RegistrationComponent } from './registration/registration.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatProgressSpinnerModule
   ],
   providers: [UserService, AuthService, TokenStorage,
     {provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true},

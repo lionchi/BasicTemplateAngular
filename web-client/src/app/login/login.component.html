@@ -1,3 +1,7 @@
+<!-- Спинер -->
+<div class="loading-indicator" *ngIf="isLoading">
+  <mat-spinner [diameter]="50"></mat-spinner>
+</div>
 <!-- Всплывающие уведомление -->
 <div class="popup-main" *ngIf="showPopup" [ngStyle]="{'display':display}">
   <div class="alert alert-danger" *ngIf="isError">
@@ -22,44 +26,44 @@
 <!-- Форма авторизации -->
 <div class="login-form">
   <h2 class="text-center">Авторизация</h2>
-  <form [formGroup]="angForm">
+  <form [formGroup]="authorizationForm">
     <div class="form-group">
       <div class="input-group">
         <span class="input-group-addon"><i class="fa fa-user"></i></span>
-        <input type="text" id="login" name="login" class="form-control" placeholder="Логин" autocomplete="off" formControlName="login"
+        <input type="text" id="login" name="login" class="form-control" placeholder="Логин" autocomplete="off"
+               formControlName="login"
                [(ngModel)]="login" required/>
       </div>
     </div>
-    <div
-      *ngIf="angForm.controls['login'].invalid && (angForm.controls['login'].dirty || angForm.controls['login'].touched)"
-      class="alert alert-danger">
-      <div *ngIf="angForm.controls['login'].errors.required">
-        Логин не должен быть пустым
-      </div>
+    <div *ngIf="isSubmittedAuthorizationForm && authorizationForm.controls['login'].errors" class="alert alert-danger">
+      Логин не должен быть пустым
     </div>
     <div class="form-group">
       <div class="input-group">
         <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-        <input type="password" class="form-control" id="password" name="password" placeholder="Пароль" autocomplete="off"
+        <input type="password" class="form-control" id="password" name="password" placeholder="Пароль"
+               autocomplete="off"
                formControlName="password" [(ngModel)]="password" required/>
       </div>
     </div>
     <div
-      *ngIf="angForm.controls['password'].invalid && (angForm.controls['password'].dirty || angForm.controls['password'].touched)"
+      *ngIf="isSubmittedAuthorizationForm && authorizationForm.controls['password'].errors!=null && (authorizationForm.controls['password'].errors.required || authorizationForm.controls['password'].errors.minlength!=null)"
       class="alert alert-danger">
-      <div *ngIf="angForm.controls['password'].errors.required">
+      <div *ngIf="authorizationForm.controls['password'].errors.required">
         Пароль не должен быть пустым
       </div>
-      <div *ngIf="angForm.controls['password'].errors">
+      <div *ngIf="authorizationForm.controls['password'].errors.minlength">
         Пароль должен быть больше 6 символов
       </div>
     </div>
     <div class="form-group">
       <button class="btn btn-primary btn-block" (click)="authorization()">Войти</button>
     </div>
+    <div class="form-group">
+      <button class="btn btn-secondary btn-block" (click)="openModalDialog()">Забыли пароль?</button>
+    </div>
     <div class="clearfix">
       <a class="pull-left" routerLink="/registration" target="_blank">Создать акаунт</a>
-      <a class="pull-right" style="cursor: pointer; color: #007bff" (click)="openModalDialog()">Забыли пароль?</a>
     </div>
   </form>
 </div>
@@ -74,23 +78,23 @@
           </button>
         </div>
         <div class="modal-body">
-          <form [formGroup]="passwordRecovery">
+          <form [formGroup]="passwordRecoveryForm">
             <div class="form-group">
               <div class="input-group">
                 <input type="text" id="email" name="email" class="form-control" placeholder="Email" autocomplete="off"
                        formControlName="email" required/>
               </div>
             </div>
-            <div
-              *ngIf="passwordRecovery.controls['email'].invalid && (passwordRecovery.controls['email'].dirty || passwordRecovery.controls['email'].touched)"
-              class="alert alert-danger">
-              <div *ngIf="passwordRecovery.controls['email'].errors">
-                Неверный формат email
+            <div *ngIf="isSubmittedPasswordRecoveryForm && passwordRecoveryForm.controls['email'].errors!=null && (passwordRecoveryForm.controls['email'].errors.required || passwordRecoveryForm.controls['email'].errors.pattern!=null)" class="alert alert-danger">
+              <div *ngIf="passwordRecoveryForm.controls['email'].errors.required">
+                Email не должен быть пустым
+              </div>
+              <div *ngIf="passwordRecoveryForm.controls['email'].errors.pattern">
+                Не верный формат email
               </div>
             </div>
             <div class="form-group">
-              <button class="btn btn-primary btn-block" [disabled]="passwordRecovery.invalid"
-                      (click)="recoverPass(passwordRecovery.value)">Восстановить
+              <button class="btn btn-primary btn-block" (click)="recoverPass(passwordRecoveryForm.value)">Восстановить
               </button>
             </div>
           </form>

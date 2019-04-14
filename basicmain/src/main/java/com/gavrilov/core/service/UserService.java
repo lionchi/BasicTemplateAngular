@@ -16,7 +16,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Optional;
@@ -27,15 +26,13 @@ import java.util.stream.Collectors;
 public class UserService {
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
-    private final EntityManager entityManager;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserService(RoleRepository roleRepository, UserRepository userRepository, EntityManager entityManager,
+    public UserService(RoleRepository roleRepository, UserRepository userRepository,
                        BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
-        this.entityManager = entityManager;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
