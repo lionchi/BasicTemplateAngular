@@ -25,7 +25,7 @@ server:
   port: 8080
 mail:
   system: lionchi.jenkins@gmail.com
-  password: Megamozg12131415
+  password: ************
   host: smtp.gmail.com
   port: 587
   transport:
