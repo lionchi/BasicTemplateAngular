@@ -14,3 +14,38 @@
 a:hover {
   text-decoration: unset;
 }
+
+/* Custom Btn */
+.custom-btn-primary {
+  color: #fff;
+  background-color:  #93d4f2;
+  border-color:  #93d4f2;
+}
+
+.custom-btn-primary:hover {
+  color: #fff;
+  background-color: #0093d8;
+  border-color: #0093d8
+}
+
+.custom-btn-primary:focus, .custom-btn-primary.focus {
+  box-shadow: 0 0 0 0.2rem rgba(53,119,195, 0.8);
+}
+
+.custom-btn-primary.disabled, .btn-primary:disabled {
+  color: #fff;
+  background-color: #93d4f2;
+  border-color: #93d4f2;
+}
+
+.custom-btn-primary:not(:disabled):not(.disabled):active, .custom-btn-primary:not(:disabled):not(.disabled).active,
+.show > .custom-btn-primary.dropdown-toggle {
+  color: #fff;
+  background-color: #0093d8;
+  border-color: #0093d8;
+}
+
+.custom-btn-primary:not(:disabled):not(.disabled):active:focus, .custom-btn-primary:not(:disabled):not(.disabled).active:focus,
+.show > .custom-btn-primary.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(53,119,195, 0.8);
+}

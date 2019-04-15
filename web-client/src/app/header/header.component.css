@@ -1,17 +1,117 @@
-.navbar-brand {
-  width: 10%;
-  border-right: 2px solid #fff;
+.d-header-menu {
+  margin-left: 150px
 }
 
-.navbar-right {
-  float: right !important;
-  margin-right: -15px;
+.d-header-menu a {
+  font-size: 15px
 }
 
-.pointer {
+.d-header {
+  padding-left: 45px;
+  padding-right: 45px;
+  background: #0360c8 url("../img/header.jpg") top center no-repeat
+}
+
+.d-header__logoBox {
+  font-size: 23px
+}
+
+.d-header__logo {
+  display: inline-block;
+  width: 149px;
+  height: 46px;
+  /*background: url("../img/design/header_logo.svg") no-repeat;*/
+  background-size: contain;
+  margin: 0 24px 0 0
+}
+
+.d-header__textLogo {
+  display: inline-block;
+  font-weight: bold;
+  font-size: 31px;
+  margin: 0 20px 0 0;
+  text-decoration: none;
+  letter-spacing: 1px;
+  color: #fff !important
+}
+
+.d-header > div {
+  height: 120px;
+  display: table-cell;
+  white-space: nowrap;
+  color: #ffffff;
+  vertical-align: middle
+}
+
+.d-header > div.d-header__center {
+  width: 100%
+}
+
+.d-menu {
+  background: #fff;
+  display: block;
+  white-space: nowrap;
+  border-bottom: 1px solid #efefef;
+  position: relative;
+  padding: 0 280px
+}
+
+.d-menu_links {
+  text-align: center
+}
+
+.d-menu_links a {
+  position: relative;
+  display: inline-block;
+  line-height: 55px;
+  color: #333;
+  font-size: 16px;
+  text-decoration: none;
+  text-transform: uppercase
+}
+
+.d-menu_links a + a {
+  margin-left: 35px
+}
+
+.d-menu_links a:hover {
+  color: #8c8c8c
+}
+
+.d-menu_links a.active {
+  color: #0071ce
+}
+
+.d-menu_links a.active:after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: #0071ce
+}
+
+.checkInOut {
+  display: inline-block;
+  font-size: 16px;
+  border: 1px solid #1b9eff;
+  background: rgba(27, 158, 255, 0.90);
+  border-radius: 4px;
+  padding: 0 25px;
+  line-height: 46px;
+  color: #fff;
+  text-decoration: none
+}
+
+.checkInOut:hover {
+  background: rgba(6, 16, 22, 0.71);
+  color: #0071ce;
   cursor: pointer;
 }
 
-/*a:hover {
-  text-decoration: underline;
-}*/
+.a-out {
+  float: right;
+  margin-right: -250px;
+  cursor: pointer;
+}
